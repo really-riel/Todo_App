@@ -130,6 +130,7 @@ button {
   cursor: pointer;
 }
 input {
+  color: var(--TODO_TEXTCOLOR);
   width: 100%;
   background-color: transparent;
   outline: none;
