@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- displays site properly based on user's device -->
+
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="./images/favicon-32x32.png"
+    />
+
+    <title>Frontend Mentor | Todo app</title>
+
+    <link rel="stylesheet" href="main.css" />
+    <script src="main.js"></script>
+  </head>
+  <body>
+    <div class="container">
+      <header>
+        <div class="titleContainer">
+          <h1>TODO</h1>
+          <div class="themeIcon"></div>
+        </div>
+
+        <form action="">
+          <button class="todoListBtn"></button>
+          <input type="text" placeholder="Create a new todo..." />
+        </form>
+      </header>
+
+      <section class="todoListSection">
+        <ul class="todoList">
+          <li class="todoListItem">
+            <div class="cover">
+              <button class="todoListBtn"></button>
+              <span class="todoText">running for an hour</span>
+            </div>
+            <button class="cancelBtn"></button>
+          </li>
+          <li class="todoListItem">
+            <div class="cover">
+              <button class="todoListBtn"></button>
+              <span class="todoText">running for an hour</span>
+            </div>
+            <button class="cancelBtn"></button>
+          </li>
+          <li class="todoListItem">
+            <div class="cover">
+              <button class="todoListBtn"></button>
+              <span class="todoText">running for an hour</span>
+            </div>
+            <button class="cancelBtn"></button>
+          </li>
+          <li class="todoListItem">
+            <div class="cover">
+              <button class="todoListBtn checked"></button>
+              <span class="todoText checkedText">running for an hour</span>
+            </div>
+            <button class="cancelBtn"></button>
+          </li>
+        </ul>
+        <ul class="todoCount">
+          <li class="itemsLeft">items left</li>
+          <li class="filter">
+            <div class="all activeClass">All</div>
+            <div class="active">Active</div>
+            <div class="completed">Completed</div>
+          </li>
+          <li class="clearCompleted">Clear Completed</li>
+        </ul>
+      </section>
+      <section class="filterSection">
+        <div class="all activeClass">All</div>
+        <div class="active">Active</div>
+        <div class="completed">Completed</div>
+      </section>
+      <footer class="footer">
+        <p>Drag and drop to reorder list</p>
+      </footer>
+      <!-- Add dynamic number -->
+    </div>
+  </body>
+</html>

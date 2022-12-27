@@ -1,0 +1,298 @@
+@import url("https://fonts.googleapis.com/css2?family=Josefin+Sans&display=swap");
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+image {
+  display: block;
+}
+html {
+  font-size: 12px;
+  font-family: "Josefin Sans", sans-serif;
+}
+:root {
+  /* HEADER BG IMG */
+  --MOBILE_HEADER_BG_IMG: url(images/bg-mobile-light.jpg);
+
+  --DESKTOP_HEADER_BG_IMG: url(images/bg-desktop-light.jpg);
+
+  /* THEME ICON */
+  --THEME_ICON: url(images/icon-moon.svg);
+
+  /* COLORS */
+  --TITLE_COLOR: hsl(0, 0%, 98%);
+  --FONT_COLOR: hsl(236, 9%, 61%);
+  --FILTER_HOVER_COLOR: hsl(235, 19%, 35%);
+  --BODY_BG_COLOR: hsl(236, 33%, 92%);
+  --BORDER_COLOR: hsl(236, 9%, 61%);
+  --BG_COLOR: hsl(0, 0%, 98%);
+  --ACTIVE_COLOR: hsl(220, 98%, 61%);
+  --TODO_TEXTCOLOR: hsl(235, 19%, 35%);
+  --HOVER_COLOR: hsl(240, 5%, 35%);
+  --BTN_BORDER_COLOR: hsl(233, 11%, 84%);
+  --FILTER_COLOR: hsl(240, 8%, 54%);
+
+  /* BORDER */
+  --BORDER_RADIUS: 5px;
+
+  /* PADDING */
+  --PADDING: 20px 20px;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    /* Header BG IMG */
+    --MOBILE_HEADER_BG_IMG: url(images/bg-mobile-dark.jpg);
+    --DESKTOP_HEADER_BG_IMG: url(images/bg-desktop-dark.jpg);
+
+    /* THEME ICON */
+    --THEME_ICON: url(images/icon-sun.svg);
+
+    /* COLORS */
+    --TITLE_COLOR: hsl(236, 33%, 92%);
+    --BODY_BG_COLOR: hsl(235, 21%, 11%);
+    --FONT_COLOR: hsl(234, 11%, 52%);
+    --FILTER_HOVER_COLOR: hsl(236, 33%, 92%);
+
+    --BORDER_COLOR: hsl(233, 14%, 35%);
+    --BG_COLOR: hsl(235, 24%, 19%);
+    --ACTIVE_COLOR: hsl(220, 98%, 61%);
+    --TODO_TEXTCOLOR: hsl(234, 39%, 85%);
+    --HOVER_COLOR: hsl(234, 39%, 85%);
+    --BTN_BORDER_COLOR: hsl(233, 14%, 35%);
+    --FILTER_COLOR: hsl(234, 11%, 52%);
+
+    /* theme */
+    --VeryDarkBlue: hsl(235, 21%, 11%);
+    --VeryDarkDesaturatedBlue: hsl(235, 24%, 19%);
+    --LightGrayishBlue: hsl(234, 39%, 85%);
+    --LightGrayishBlue_hover: hsl(236, 33%, 92%);
+    --DarkGrayishBlue: hsl(234, 11%, 52%);
+    --VeryDarkGrayishBlue: hsl(233, 14%, 35%);
+    --VeryDarkGrayishBlue: hsl(237, 14%, 26%);
+  }
+}
+
+body {
+  min-height: 100vh;
+  width: 100vw;
+  background-color: var(--BODY_BG_COLOR);
+  background-image: var(--MOBILE_HEADER_BG_IMG);
+  background-size: contain;
+  background-repeat: no-repeat;
+}
+.container {
+  width: 90%;
+  max-width: 700px;
+  margin: 0 auto;
+}
+header {
+  margin: 20px 0;
+  width: 100%;
+}
+.titleContainer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 45px 0 30px;
+}
+h1 {
+  color: var(--TITLE_COLOR);
+  font-size: 30px;
+  letter-spacing: 10px;
+}
+.themeIcon {
+  cursor: pointer;
+  width: 25px;
+  height: 25px;
+
+  background-image: var(--THEME_ICON);
+  background-size: cover;
+}
+form {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 15px;
+  width: 100%;
+  background-color: var(--BG_COLOR);
+  padding: var(--PADDING);
+  border-radius: 5px;
+}
+button {
+  width: 17px;
+  height: 17px;
+
+  outline: none;
+  background-color: transparent;
+  cursor: pointer;
+}
+input {
+  width: 100%;
+  background-color: transparent;
+  outline: none;
+  border: none;
+  font-size: inherit;
+  caret-color: var(--ACTIVE_COLOR);
+}
+input::placeholder {
+  color: var(--FONT_COLOR);
+}
+
+ul {
+  list-style-type: none;
+  background-color: var(--BG_COLOR);
+  cursor: pointer;
+}
+li {
+  padding: var(--PADDING);
+}
+.todoListSection {
+  border-radius: var(--BORDER_RADIUS);
+  overflow: hidden;
+}
+.todoListItem {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid var(--BORDER_COLOR);
+}
+.cover {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 15px;
+}
+.todoListBtn {
+  border-radius: 50%;
+  transform: scale(1.2);
+  border: 1px solid var(--BTN_BORDER_COLOR);
+}
+
+.todoText {
+  color: var(--TODO_TEXTCOLOR);
+  font-weight: 700;
+}
+
+.cancelBtn {
+  border: none;
+  background-image: url(images/icon-cross.svg);
+  background-size: cover;
+  transform: scale(0.8);
+}
+
+.todoCount {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: var(--FONT_COLOR);
+}
+.itemsLeft:hover,
+.itemsLeft:focus,
+.itemsLeft:active,
+.clearCompleted:hover,
+.clearCompleted:active,
+.clearCompleted:focus {
+  color: var(--HOVER_COLOR);
+}
+
+.filterSection {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 15px;
+  background-color: var(--BG_COLOR);
+  margin: 20px 0;
+  padding: var(--PADDING);
+  border-radius: var(--BORDER_RADIUS);
+  color: var(--FILTER_COLOR);
+  font-weight: 700;
+  font-size: 16px;
+}
+.all,
+.active,
+.completed {
+  cursor: pointer;
+}
+.all:hover:not(.activeClass),
+.all:focus:not(.activeClass),
+.active:hover:not(.activeClass),
+.active:focus:not(.activeClass),
+.completed:hover:not(.activeClass),
+.completed:hover:not(.activeClass) {
+  color: var(--FILTER_HOVER_COLOR);
+}
+
+.footer {
+  margin: 40px 0 30px;
+  text-align: center;
+  color: var(--FONT_COLOR);
+}
+.filter {
+  display: none;
+}
+/* utilites */
+.checked {
+  background-image: url(images/icon-check.svg);
+  background-image: url(images/icon-check.svg),
+    linear-gradient(hsl(192, 100%, 67%), hsl(280, 87%, 65%));
+
+  background-repeat: no-repeat;
+  background-position: center;
+  border: none;
+  outline: none;
+}
+.checkedText {
+  opacity: 0.3;
+  text-decoration: line-through;
+  transition: all 0.3s ease-in;
+}
+
+.activeClass {
+  color: var(--ACTIVE_COLOR);
+}
+
+@media screen and (min-width: 700px) {
+  html {
+    font-size: 16px;
+  }
+  body {
+    background-image: var(--DESKTOP_HEADER_BG_IMG);
+  }
+  h1 {
+    font-size: 50px;
+  }
+  input {
+    font-size: 18px;
+  }
+  input::placeholder {
+    font-size: 16px;
+  }
+  button {
+    width: 20px;
+    height: 20px;
+  }
+  .cancelBtn {
+    display: none;
+  }
+  .todoListBtn:hover,
+  .todoListBtn:focus {
+    background: linear-gradient(var(--BG_COLOR), var(--BG_COLOR)) padding-box,
+      linear-gradient(to right, hsl(192, 100%, 67%), hsl(280, 87%, 65%))
+        border-box;
+    border-radius: 50%;
+    border: 2px solid transparent;
+  }
+  .filterSection {
+    display: none;
+  }
+  .filter {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+    font-weight: 700;
+  }
+}
