@@ -109,6 +109,7 @@ header {
 h1 {
   color: var(--TITLE_COLOR);
   font-size: 30px;
+
   letter-spacing: 10px;
   user-select: none;
   -webkit-user-select: none;
@@ -150,6 +151,8 @@ input {
   border: none;
   font-size: inherit;
   caret-color: var(--ACTIVE_COLOR);
+  word-wrap: break-word;
+  word-break: break-all;
 }
 input::placeholder {
   color: var(--FONT_COLOR);

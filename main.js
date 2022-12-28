@@ -40,6 +40,7 @@ const initApp = () => {
         all.classList.add("activeClass");
       }
       all.addEventListener("click", displayAll);
+      all.click();
     });
 
     const cancelBtnElem = document.querySelectorAll(".cancelBtn");
@@ -53,6 +54,7 @@ const initApp = () => {
     });
 
     countItemsLeft();
+    mouseOver();
   });
   /* get from storage */
   const getTodoFromLocalStorage = () => {
@@ -85,6 +87,7 @@ const initApp = () => {
       `;
       todoListElem.appendChild(todoListitem);
       listArray.push(todoListitem);
+
       /* All */
       let alls = document.querySelectorAll(".all");
       alls.forEach((all) => {
@@ -92,6 +95,24 @@ const initApp = () => {
           all.classList.add("activeClass");
         }
         all.addEventListener("click", displayAll);
+      });
+    });
+
+    /* for checked todos */
+    let doneTodos;
+    if (localStorage.getItem("doneTodos") === null) {
+      doneTodos = [];
+    } else {
+      doneTodos = JSON.parse(localStorage.getItem("doneTodos"));
+    }
+    doneTodos.forEach((doneTodo) => {
+      console.log(doneTodo);
+      const todoTextElems = document.querySelectorAll(".todoText");
+      todoTextElems.forEach((todoTextElem) => {
+        if (todoTextElem.innerText === doneTodo) {
+          todoTextElem.classList.add("checkedText");
+          todoTextElem.previousElementSibling.classList.add("checked");
+        }
       });
     });
   };
@@ -141,7 +162,15 @@ const initApp = () => {
     todoDragChangable.addEventListener("drop", dragDrop);
   });
 
-  /* mouse Over */
+  mouseOver();
+
+  /* count items left */
+  countItemsLeft();
+};
+document.addEventListener("DOMContentLoaded", initApp);
+
+/* mouse Over */
+const mouseOver = () => {
   const todoListitems = document.querySelectorAll(".todoListItem");
   todoListitems.forEach((todoListitem) => {
     todoListitem.addEventListener("mouseover", () => {
@@ -151,11 +180,7 @@ const initApp = () => {
       todoListitem.lastElementChild.style.display = "none";
     });
   });
-
-  /* count items left */
-  countItemsLeft();
 };
-document.addEventListener("DOMContentLoaded", initApp);
 
 /* save in local storage */
 const saveToLocalStorage = (item) => {
@@ -176,9 +201,13 @@ const saveToLocalStorage = (item) => {
 const deleteTodo = (e) => {
   const todoItem = e.target.parentElement;
   todoItem.remove();
+  const index = listArray.indexOf(todoItem);
+
+  listArray.splice(index, 1);
 
   removefromLocalStorage(todoItem.innerText.trim());
   countItemsLeft();
+  removeDoneTodosFromLocalStorage(todoItem.innerText.trim());
 };
 
 const removefromLocalStorage = (item) => {
@@ -197,11 +226,47 @@ const removefromLocalStorage = (item) => {
 
 const checkDone = (e) => {
   e.target.classList.toggle("checked");
-  const text = e.target.nextElementSibling;
+  const textElem = e.target.nextElementSibling;
 
-  text.classList.toggle("checkedText");
+  textElem.classList.toggle("checkedText");
   //e.target.nextSiblingElem.classList.toggle("checkedText");
   countItemsLeft();
+  //const checkedTextContent = text.innerText;
+
+  console.log("dan");
+  saveDoneTodosToLocalStorage(textElem);
+};
+
+const saveDoneTodosToLocalStorage = (item) => {
+  let todos;
+  if (localStorage.getItem("doneTodos") === null) {
+    todos = [];
+  } else {
+    todos = JSON.parse(localStorage.getItem("doneTodos"));
+  }
+
+  if (!item.classList.contains("checkedText")) {
+    const indexofText = todos.indexOf(item.innerText);
+    todos.splice(indexofText, 1);
+  } else {
+    todos.push(item.innerText);
+  }
+
+  localStorage.setItem("doneTodos", JSON.stringify(todos));
+};
+
+const removeDoneTodosFromLocalStorage = (item) => {
+  let todos;
+  if (localStorage.getItem("doneTodos") === null) {
+    todos = [];
+  } else {
+    todos = JSON.parse(localStorage.getItem("doneTodos"));
+  }
+
+  const getIndex = todos.indexOf(item);
+  todos.splice(getIndex, 1);
+
+  localStorage.setItem("doneTodos", JSON.stringify(todos));
 };
 
 function setPreferredColorTheme(mode = "dark") {
