@@ -29,6 +29,13 @@ const initApp = () => {
     `;
     todoListElem.appendChild(todoListitem);
     listArray.push(todoListitem);
+    const highlight = () => {
+      todoListElem.lastElementChild.classList.add("highlight");
+      setTimeout(() => {
+        todoListElem.lastElementChild.classList.remove("highlight");
+      }, 1000);
+    };
+    highlight();
 
     saveToLocalStorage(inputText);
     inputTextElem.value = "";

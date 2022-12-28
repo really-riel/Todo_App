@@ -280,6 +280,9 @@ li {
 .draggedOver {
   opacity: 0.2;
 }
+.highlight {
+  border: 1px solid var(--ACTIVE_COLOR);
+}
 
 @media screen and (min-width: 700px) {
   html {
