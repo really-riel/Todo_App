@@ -9,7 +9,6 @@ const initApp = () => {
 
   // Theme toggle
   themeIconElem.addEventListener("click", setPreferredColorTheme);
-
   // Input
 
   inputBtnElement.addEventListener("click", (e) => {
@@ -30,6 +29,7 @@ const initApp = () => {
     `;
     todoListElem.appendChild(todoListitem);
     listArray.push(todoListitem);
+
     saveToLocalStorage(inputText);
     inputTextElem.value = "";
     console.log(listArray);
@@ -41,6 +41,18 @@ const initApp = () => {
       }
       all.addEventListener("click", displayAll);
     });
+
+    const cancelBtnElem = document.querySelectorAll(".cancelBtn");
+
+    cancelBtnElem.forEach((cancelBtn) => {
+      cancelBtn.addEventListener("click", deleteTodo);
+    });
+    const completedBtns = document.querySelectorAll(".todoListBtn");
+    completedBtns.forEach((completedBtn) => {
+      completedBtn.addEventListener("click", checkDone);
+    });
+
+    countItemsLeft();
   });
   /* get from storage */
   const getTodoFromLocalStorage = () => {
@@ -87,6 +99,7 @@ const initApp = () => {
 
   /* cancel button */
   const cancelBtnElem = document.querySelectorAll(".cancelBtn");
+
   cancelBtnElem.forEach((cancelBtn) => {
     cancelBtn.addEventListener("click", deleteTodo);
   });
@@ -96,10 +109,6 @@ const initApp = () => {
   completedBtns.forEach((completedBtn) => {
     completedBtn.addEventListener("click", checkDone);
   });
-
-  /* items left */
-  const itemsLeftElem = document.querySelector(".itemsLeft");
-  itemsLeftElem.addEventListener("click", displayItemsLeft);
 
   /* clear Completed */
   const clearCompleted = document.querySelector(".clearCompleted");
@@ -118,14 +127,18 @@ const initApp = () => {
     activeElem.addEventListener("click", displayActiveTodos);
   });
 
-  /* drag over */
+  /* drag over and drag drop */
   const todos = document.querySelectorAll(".todoListItem");
+  const todoDragChangables = document.querySelectorAll(".cover");
   todos.forEach((todo, index) => {
     todo.addEventListener("dragstart", dragStart);
-    todo.addEventListener("dragover", dragOver);
-    todo.addEventListener("dragenter", dragEnter);
-    todo.addEventListener("dragleave", dragLeave);
-    todo.addEventListener("drop", dragDrop);
+  });
+  todoDragChangables.forEach((todoDragChangable) => {
+    //console.log(todoDragChangable);
+    todoDragChangable.addEventListener("dragover", dragOver);
+    todoDragChangable.addEventListener("dragenter", dragEnter);
+    todoDragChangable.addEventListener("dragleave", dragLeave);
+    todoDragChangable.addEventListener("drop", dragDrop);
   });
 
   /* mouse Over */
@@ -138,6 +151,9 @@ const initApp = () => {
       todoListitem.lastElementChild.style.display = "none";
     });
   });
+
+  /* count items left */
+  countItemsLeft();
 };
 document.addEventListener("DOMContentLoaded", initApp);
 
@@ -162,6 +178,7 @@ const deleteTodo = (e) => {
   todoItem.remove();
 
   removefromLocalStorage(todoItem.innerText.trim());
+  countItemsLeft();
 };
 
 const removefromLocalStorage = (item) => {
@@ -184,20 +201,7 @@ const checkDone = (e) => {
 
   text.classList.toggle("checkedText");
   //e.target.nextSiblingElem.classList.toggle("checkedText");
-};
-
-const displayItemsLeft = (e) => {
-  const todoTexts = document.querySelectorAll(".todoText");
-
-  todoTexts.forEach((todoText) => {
-    if (todoText.classList.contains("checkedText")) {
-      todoText.parentElement.parentElement.classList.add("none");
-      let alls = document.querySelectorAll(".all");
-      alls.forEach((all) => {
-        all.classList.remove("activeClass");
-      });
-    }
-  });
+  countItemsLeft();
 };
 
 function setPreferredColorTheme(mode = "dark") {
@@ -239,6 +243,7 @@ const clearCompletedTodos = (e) => {
       removefromLocalStorage(todoBtn.nextElementSibling.innerText);
     }
   });
+  countItemsLeft();
 };
 
 const displayCompletedTodos = (e) => {
@@ -298,16 +303,17 @@ const dragLeave = (e) => {
 const dragDrop = (e) => {
   e.target.classList.remove("draggedOver");
   let dragEndIndex = listArray.indexOf(e.target);
-
-  /*   listArray[dragStartIndex] = listArray[dragEndIndex];
-  listArray[dragEndIndex] = listArray[dragStartIndex]; */
-  const firstElem = listArray[dragStartIndex].firstElementChild;
-  const lastElem = listArray[dragEndIndex].firstElementChild;
 };
 
-const nameN = ["ade", "bola", "bayo", "fool"];
-nameN[0] = nameN[2];
-nameN[2] = nameN[0];
-console.log(nameN);
+const countItemsLeft = () => {
+  const todosBtns = document.querySelectorAll(".todoListBtn");
+  let countArray = [];
+  todosBtns.forEach((todoBtn, index) => {
+    if (!todoBtn.classList.contains("checked")) {
+      countArray.push(todoBtn);
+    }
+  });
 
-console.log(listArray);
+  const itemsLeft = document.querySelector(".itemsLeft");
+  itemsLeft.innerText = `${countArray.length} items Left`;
+};

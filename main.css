@@ -9,7 +9,7 @@ image {
   display: block;
 }
 html {
-  font-size: 12px;
+  font-size: 18px;
   font-family: "Josefin Sans", sans-serif;
 }
 @media (prefers-color-scheme: light) {
@@ -208,9 +208,7 @@ li {
   align-items: center;
   color: var(--FONT_COLOR);
 }
-.itemsLeft:hover,
-.itemsLeft:focus,
-.itemsLeft:active,
+
 .clearCompleted:hover,
 .clearCompleted:active,
 .clearCompleted:focus {
@@ -228,7 +226,7 @@ li {
   border-radius: var(--BORDER_RADIUS);
   color: var(--FILTER_COLOR);
   font-weight: 700;
-  font-size: 16px;
+  font-size: 20px;
 }
 .all,
 .active,
@@ -282,7 +280,7 @@ li {
 
 @media screen and (min-width: 700px) {
   html {
-    font-size: 16px;
+    font-size: 20px;
   }
   body {
     background-image: var(--DESKTOP_HEADER_BG_IMG);
@@ -292,10 +290,10 @@ li {
     font-size: 50px;
   }
   input {
-    font-size: 18px;
+    font-size: 20px;
   }
   input::placeholder {
-    font-size: 16px;
+    font-size: 20px;
   }
   button {
     width: 20px;
