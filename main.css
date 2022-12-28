@@ -12,33 +12,35 @@ html {
   font-size: 12px;
   font-family: "Josefin Sans", sans-serif;
 }
-:root {
-  /* HEADER BG IMG */
-  --MOBILE_HEADER_BG_IMG: url(images/bg-mobile-light.jpg);
+@media (prefers-color-scheme: light) {
+  :root {
+    /* HEADER BG IMG */
+    --MOBILE_HEADER_BG_IMG: url(images/bg-mobile-light.jpg);
 
-  --DESKTOP_HEADER_BG_IMG: url(images/bg-desktop-light.jpg);
+    --DESKTOP_HEADER_BG_IMG: url(images/bg-desktop-light.jpg);
 
-  /* THEME ICON */
-  --THEME_ICON: url(images/icon-moon.svg);
+    /* THEME ICON */
+    --THEME_ICON: url(images/icon-moon.svg);
 
-  /* COLORS */
-  --TITLE_COLOR: hsl(0, 0%, 98%);
-  --FONT_COLOR: hsl(236, 9%, 61%);
-  --FILTER_HOVER_COLOR: hsl(235, 19%, 35%);
-  --BODY_BG_COLOR: hsl(236, 33%, 92%);
-  --BORDER_COLOR: hsl(236, 9%, 61%);
-  --BG_COLOR: hsl(0, 0%, 98%);
-  --ACTIVE_COLOR: hsl(220, 98%, 61%);
-  --TODO_TEXTCOLOR: hsl(235, 19%, 35%);
-  --HOVER_COLOR: hsl(240, 5%, 35%);
-  --BTN_BORDER_COLOR: hsl(233, 11%, 84%);
-  --FILTER_COLOR: hsl(240, 8%, 54%);
+    /* COLORS */
+    --TITLE_COLOR: hsl(0, 0%, 98%);
+    --FONT_COLOR: hsl(236, 9%, 61%);
+    --FILTER_HOVER_COLOR: hsl(235, 19%, 35%);
+    --BODY_BG_COLOR: hsl(236, 33%, 92%);
+    --BORDER_COLOR: hsl(236, 9%, 61%);
+    --BG_COLOR: hsl(0, 0%, 98%);
+    --ACTIVE_COLOR: hsl(220, 98%, 61%);
+    --TODO_TEXTCOLOR: hsl(235, 19%, 35%);
+    --HOVER_COLOR: hsl(240, 5%, 35%);
+    --BTN_BORDER_COLOR: hsl(233, 11%, 84%);
+    --FILTER_COLOR: hsl(240, 8%, 54%);
 
-  /* BORDER */
-  --BORDER_RADIUS: 5px;
+    /* BORDER */
+    --BORDER_RADIUS: 5px;
 
-  /* PADDING */
-  --PADDING: 20px 20px;
+    /* PADDING */
+    --PADDING: 20px 20px;
+  }
 }
 
 @media (prefers-color-scheme: dark) {
@@ -72,12 +74,18 @@ html {
     --DarkGrayishBlue: hsl(234, 11%, 52%);
     --VeryDarkGrayishBlue: hsl(233, 14%, 35%);
     --VeryDarkGrayishBlue: hsl(237, 14%, 26%);
+
+    /* BORDER */
+    --BORDER_RADIUS: 5px;
+
+    /* PADDING */
+    --PADDING: 20px 20px;
   }
 }
 
 body {
   min-height: 100vh;
-  width: 100vw;
+  max-width: 100vw;
   background-color: var(--BODY_BG_COLOR);
   background-image: var(--MOBILE_HEADER_BG_IMG);
   background-size: contain;
@@ -102,6 +110,8 @@ h1 {
   color: var(--TITLE_COLOR);
   font-size: 30px;
   letter-spacing: 10px;
+  user-select: none;
+  -webkit-user-select: none;
 }
 .themeIcon {
   cursor: pointer;
@@ -110,6 +120,9 @@ h1 {
 
   background-image: var(--THEME_ICON);
   background-size: cover;
+}
+.themeIcon:active {
+  transform: scale(0.8);
 }
 form {
   display: flex;
@@ -165,6 +178,11 @@ li {
   justify-content: center;
   align-items: center;
   gap: 15px;
+}
+.inputBtn {
+  border-radius: 50%;
+  transform: scale(1.2);
+  border: 1px solid var(--BTN_BORDER_COLOR);
 }
 .todoListBtn {
   border-radius: 50%;
@@ -251,8 +269,15 @@ li {
   transition: all 0.3s ease-in;
 }
 
+.none {
+  display: none;
+}
+
 .activeClass {
   color: var(--ACTIVE_COLOR);
+}
+.draggedOver {
+  opacity: 0.2;
 }
 
 @media screen and (min-width: 700px) {
@@ -261,6 +286,7 @@ li {
   }
   body {
     background-image: var(--DESKTOP_HEADER_BG_IMG);
+    background-size: contain;
   }
   h1 {
     font-size: 50px;
@@ -278,13 +304,15 @@ li {
   .cancelBtn {
     display: none;
   }
-  .todoListBtn:hover,
-  .todoListBtn:focus {
+  .todoListBtn:hover:not(.checked),
+  .todoListBtn:focus:not(.checked),
+  .inputBtn:hover:not(.checked),
+  .inputBtn:focus:not(.checked) {
     background: linear-gradient(var(--BG_COLOR), var(--BG_COLOR)) padding-box,
       linear-gradient(to right, hsl(192, 100%, 67%), hsl(280, 87%, 65%))
         border-box;
     border-radius: 50%;
-    border: 2px solid transparent;
+    border: 1px solid transparent;
   }
   .filterSection {
     display: none;
