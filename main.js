@@ -187,11 +187,15 @@ document.addEventListener("DOMContentLoaded", initApp);
 const mouseOver = () => {
   const todoListitems = document.querySelectorAll(".todoListItem");
   todoListitems.forEach((todoListitem) => {
-    todoListitem.addEventListener("mouseover", () => {
-      todoListitem.lastElementChild.style.display = "flex";
-    });
-    todoListitem.addEventListener("mouseleave", () => {
-      todoListitem.lastElementChild.style.display = "none";
+    todoListitem.addEventListener("touchstart", (e) => {
+      console.log(e.target);
+      if (e.target) return;
+      todoListitem.addEventListener("mouseenter", () => {
+        todoListitem.lastElementChild.style.display = "flex";
+      });
+      todoListitem.addEventListener("mouseout", () => {
+        todoListitem.lastElementChild.style.display = "none";
+      });
     });
   });
 };

@@ -263,7 +263,7 @@ li {
   background-position: center;
   border: none;
   outline: none;
-  transition: all 0.3s linear;
+  transition: 0.3s linear;
 }
 .checkedText {
   opacity: 0.3;
@@ -309,6 +309,7 @@ li {
   .cancelBtn {
     display: none;
   }
+
   .todoListBtn:hover:not(.checked),
   .todoListBtn:focus:not(.checked),
   .inputBtn:hover:not(.checked),
