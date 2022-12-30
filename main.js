@@ -148,19 +148,6 @@ const initApp = () => {
   const clearCompleted = document.querySelector(".clearCompleted");
   clearCompleted.addEventListener("click", clearCompletedTodos);
 
-  /* completed */
-  let completedElems = document.querySelectorAll(".completed");
-  completedElems.forEach((completedElem) => {
-    completedElem.addEventListener("click", displayCompletedTodos);
-  });
-
-  /* Active */
-
-  let activeElems = document.querySelectorAll(".active");
-  activeElems.forEach((activeElem) => {
-    activeElem.addEventListener("click", displayActiveTodos);
-  });
-
   /* drag over and drag drop */
   const dragAndDrop = () => {
     const todos = document.querySelectorAll(".todoListItem");
@@ -176,26 +163,69 @@ const initApp = () => {
   };
   dragAndDrop();
 
+  /* completed */
+  const showCompletedTodos = () => {
+    let completedElems = document.querySelectorAll(".completed");
+    completedElems.forEach((completedElem) => {
+      completedElem.addEventListener("click", displayCompletedTodos);
+    });
+  };
+  showCompletedTodos();
+
+  /* Active */
+
+  let activeElems = document.querySelectorAll(".active");
+  activeElems.forEach((activeElem) => {
+    activeElem.addEventListener("click", displayActiveTodos);
+  });
+
   mouseOver();
 
   /* count items left */
   countItemsLeft();
+
+  /*   /* touch and drag for mobile */
+  /*  const touchAndDrag = () => {
+    const todos = document.querySelectorAll(".todoListItem");
+    todos.forEach((todo) => {
+      todo.addEventListener("touchstart", sortable);
+      todo.addEventListener("touchend", sortable);
+    });
+  };
+  touchAndDrag(); */
+  sortable();
 };
 document.addEventListener("DOMContentLoaded", initApp);
+const sortable = () => {
+  const sortableList = document.querySelector(".todoList");
+  new Sortable(sortableList, {
+    Animation: 150,
+    ghostClass: "sortable-ghost",
+  });
+  /*   const todoListElem = document.querySelectorA(".todoList");
+  todoListElem.innerHTML = "";
+  listArray.forEach((todo) => {
+    todoListElem.appendChild(todo);
+
+    saveToLocalStorage(todo.firstElementChild.lastElementChild.innerText);
+  });
+  console.log(listArray); */
+};
+
+const touchEnd = (e) => {
+  //do
+};
 
 /* mouse Over */
 const mouseOver = () => {
   const todoListitems = document.querySelectorAll(".todoListItem");
   todoListitems.forEach((todoListitem) => {
-    todoListitem.addEventListener("touchstart", (e) => {
-      console.log(e.target);
-      if (e.target) return;
-      todoListitem.addEventListener("mouseenter", () => {
-        todoListitem.lastElementChild.style.display = "flex";
-      });
-      todoListitem.addEventListener("mouseout", () => {
-        todoListitem.lastElementChild.style.display = "none";
-      });
+    todoListitem.addEventListener("touchstart", () => {});
+    todoListitem.addEventListener("mouseenter", () => {
+      todoListitem.lastElementChild.style.display = "flex";
+    });
+    todoListitem.addEventListener("mouseleave", () => {
+      todoListitem.lastElementChild.style.display = "none";
     });
   });
 };
@@ -257,7 +287,6 @@ const checkDone = (e) => {
   countItemsLeft();
   //const checkedTextContent = text.innerText;
 
-  console.log("dan");
   saveDoneTodosToLocalStorage(textElem);
 };
 
@@ -354,13 +383,14 @@ const displayCompletedTodos = (e) => {
   activeElems.forEach((activeElem) => {
     activeElem.classList.remove("activeClass");
   });
-  const todosBtns = document.querySelectorAll(".todoListBtn");
 
-  todosBtns.forEach((todoBtn) => {
+  listArray.forEach((todo) => {
+    const todoBtn = todo.firstElementChild.firstElementChild;
+
     if (!todoBtn.classList.contains("checked")) {
-      todoBtn.parentElement.parentElement.classList.add("none");
+      todo.classList.add("none");
     } else {
-      todoBtn.parentElement.parentElement.classList.remove("none");
+      todo.classList.remove("none");
     }
   });
 };
@@ -375,13 +405,13 @@ const displayActiveTodos = (e) => {
   completedElems.forEach((completedElem) => {
     completedElem.classList.remove("activeClass");
   });
-  const todosBtns = document.querySelectorAll(".todoListBtn");
 
-  todosBtns.forEach((todoBtn) => {
+  listArray.forEach((todo) => {
+    const todoBtn = todo.firstElementChild.firstElementChild;
     if (todoBtn.classList.contains("checked")) {
-      todoBtn.parentElement.parentElement.classList.add("none");
+      todo.classList.add("none");
     } else {
-      todoBtn.parentElement.parentElement.classList.remove("none");
+      todo.classList.remove("none");
     }
   });
 };
@@ -405,20 +435,19 @@ const dragDrop = (e) => {
   e.preventDefault();
   e.target.classList.remove("draggedOver");
   let dragEndIndex = listArray.indexOf(e.target);
-  console.log(dragStartIndex, dragEndIndex);
+
   const itemOne = listArray[dragStartIndex];
   const itemTwo = listArray[dragEndIndex];
-  console.log(itemOne);
+
   listArray.splice(dragEndIndex, 1, itemOne);
   listArray.splice(dragStartIndex, 1, itemTwo);
   // listArray.splice(dragStartIndex, 1);
-  console.log(listArray);
 
   const todoListElem = document.querySelector(".todoList");
   todoListElem.innerHTML = "";
   listArray.forEach((todo) => {
     todoListElem.appendChild(todo);
-    console.log(todo.firstElementChild.lastElementChild.innerText);
+
     saveToLocalStorage(todo.firstElementChild.lastElementChild.innerText);
   });
   //listArray.splice(dragStartIndex, 1);
