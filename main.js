@@ -29,13 +29,6 @@ const initApp = () => {
     `;
     todoListElem.appendChild(todoListitem);
     listArray.push(todoListitem);
-    const highlight = () => {
-      todoListElem.lastElementChild.classList.add("highlight");
-      setTimeout(() => {
-        todoListElem.lastElementChild.classList.remove("highlight");
-      }, 1000);
-    };
-    highlight();
 
     saveToLocalStorage(inputText);
     inputTextElem.value = "";
@@ -62,6 +55,20 @@ const initApp = () => {
 
     countItemsLeft();
     mouseOver();
+    const highlight = () => {
+      todoListElem.lastElementChild.classList.add("highlight");
+      setTimeout(() => {
+        todoListElem.lastElementChild.classList.remove("highlight");
+      }, 500);
+    };
+
+    const delayHighlight = () => {
+      highlight();
+      inputBtnElement.disabled = true;
+      setTimeout(() => (inputBtnElement.disabled = false), 1000);
+    };
+    delayHighlight();
+    dragAndDrop();
   });
   /* get from storage */
   const getTodoFromLocalStorage = () => {
@@ -113,7 +120,6 @@ const initApp = () => {
       doneTodos = JSON.parse(localStorage.getItem("doneTodos"));
     }
     doneTodos.forEach((doneTodo) => {
-      console.log(doneTodo);
       const todoTextElems = document.querySelectorAll(".todoText");
       todoTextElems.forEach((todoTextElem) => {
         if (todoTextElem.innerText === doneTodo) {
@@ -156,18 +162,19 @@ const initApp = () => {
   });
 
   /* drag over and drag drop */
-  const todos = document.querySelectorAll(".todoListItem");
-  const todoDragChangables = document.querySelectorAll(".cover");
-  todos.forEach((todo, index) => {
-    todo.addEventListener("dragstart", dragStart);
-  });
-  todoDragChangables.forEach((todoDragChangable) => {
-    //console.log(todoDragChangable);
-    todoDragChangable.addEventListener("dragover", dragOver);
-    todoDragChangable.addEventListener("dragenter", dragEnter);
-    todoDragChangable.addEventListener("dragleave", dragLeave);
-    todoDragChangable.addEventListener("drop", dragDrop);
-  });
+  const dragAndDrop = () => {
+    const todos = document.querySelectorAll(".todoListItem");
+
+    todos.forEach((todo) => {
+      todo.addEventListener("dragstart", dragStart);
+      todo.addEventListener("dragend", dragEnd);
+      todo.addEventListener("dragover", dragOver);
+      todo.addEventListener("dragenter", dragEnter);
+      todo.addEventListener("dragleave", dragLeave);
+      todo.addEventListener("drop", dragDrop);
+    });
+  };
+  dragAndDrop();
 
   mouseOver();
 
@@ -199,8 +206,14 @@ const saveToLocalStorage = (item) => {
   } else {
     todos = JSON.parse(localStorage.getItem("todoList"));
   }
+  const indexOfIncomingItems = todos.indexOf(item);
 
-  todos.push(item);
+  if (indexOfIncomingItems === -1) {
+    todos.push(item);
+  } else {
+    todos = [];
+    todos.push(item);
+  }
 
   localStorage.setItem("todoList", JSON.stringify(todos));
 };
@@ -308,13 +321,22 @@ const displayAll = (e) => {
 };
 
 const clearCompletedTodos = (e) => {
+  if (!confirm("Are you sure you want to clear all your completed TODOs?"))
+    return;
+  let checkedArray = [];
   const todosBtns = document.querySelectorAll(".todoListBtn");
   todosBtns.forEach((todoBtn) => {
     if (todoBtn.classList.contains("checked")) {
       todoBtn.parentElement.parentElement.remove();
       removefromLocalStorage(todoBtn.nextElementSibling.innerText);
+
+      checkedArray.push(todoBtn);
     }
   });
+
+  checkedArray.length === 0
+    ? alert("You have not completed any TODOs!")
+    : checkedArray;
   countItemsLeft();
 };
 
@@ -363,18 +385,39 @@ const displayActiveTodos = (e) => {
 const dragStart = (e) => {
   dragStartIndex = listArray.indexOf(e.target);
 };
+const dragEnd = (e) => {
+  e.target.style.display = "flex";
+};
 const dragEnter = (e) => {
-  e.target.classList.add("draggedOver");
+  e.currentTarget.classList.add("draggedOver");
 };
 const dragOver = (e) => {
   e.preventDefault();
 };
 const dragLeave = (e) => {
-  e.target.classList.remove("draggedOver");
+  e.currentTarget.classList.remove("draggedOver");
 };
 const dragDrop = (e) => {
+  e.preventDefault();
   e.target.classList.remove("draggedOver");
   let dragEndIndex = listArray.indexOf(e.target);
+  console.log(dragStartIndex, dragEndIndex);
+  const itemOne = listArray[dragStartIndex];
+  const itemTwo = listArray[dragEndIndex];
+  console.log(itemOne);
+  listArray.splice(dragEndIndex, 1, itemOne);
+  listArray.splice(dragStartIndex, 1, itemTwo);
+  // listArray.splice(dragStartIndex, 1);
+  console.log(listArray);
+
+  const todoListElem = document.querySelector(".todoList");
+  todoListElem.innerHTML = "";
+  listArray.forEach((todo) => {
+    todoListElem.appendChild(todo);
+    console.log(todo.firstElementChild.lastElementChild.innerText);
+    saveToLocalStorage(todo.firstElementChild.lastElementChild.innerText);
+  });
+  //listArray.splice(dragStartIndex, 1);
 };
 
 const countItemsLeft = () => {

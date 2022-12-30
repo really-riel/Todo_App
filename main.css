@@ -263,6 +263,7 @@ li {
   background-position: center;
   border: none;
   outline: none;
+  transition: all 0.3s linear;
 }
 .checkedText {
   opacity: 0.3;
