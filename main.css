@@ -13,6 +13,10 @@ html {
   font-family: "Josefin Sans", sans-serif;
 }
 @media (prefers-color-scheme: light) {
+  body::after {
+    content: "l";
+    display: none;
+  }
   :root {
     /* HEADER BG IMG */
     --MOBILE_HEADER_BG_IMG: url(images/bg-mobile-light.jpg);
@@ -44,6 +48,11 @@ html {
 }
 
 @media (prefers-color-scheme: dark) {
+  body::after {
+    content: "d";
+    color: whitesmoke;
+    display: none;
+  }
   :root {
     /* Header BG IMG */
     --MOBILE_HEADER_BG_IMG: url(images/bg-mobile-dark.jpg);
@@ -81,6 +90,73 @@ html {
     /* PADDING */
     --PADDING: 20px 20px;
   }
+}
+
+:root.light {
+  /* HEADER BG IMG */
+  --MOBILE_HEADER_BG_IMG: url(images/bg-mobile-light.jpg);
+
+  --DESKTOP_HEADER_BG_IMG: url(images/bg-desktop-light.jpg);
+
+  /* THEME ICON */
+  --THEME_ICON: url(images/icon-moon.svg);
+
+  /* COLORS */
+  --TITLE_COLOR: hsl(0, 0%, 98%);
+  --FONT_COLOR: hsl(236, 9%, 61%);
+  --FILTER_HOVER_COLOR: hsl(235, 19%, 35%);
+  --BODY_BG_COLOR: hsl(236, 33%, 92%);
+  --BORDER_COLOR: hsl(236, 9%, 61%);
+  --BG_COLOR: hsl(0, 0%, 98%);
+  --ACTIVE_COLOR: hsl(220, 98%, 61%);
+  --TODO_TEXTCOLOR: hsl(235, 19%, 35%);
+  --HOVER_COLOR: hsl(240, 5%, 35%);
+  --BTN_BORDER_COLOR: hsl(233, 11%, 84%);
+  --FILTER_COLOR: hsl(240, 8%, 54%);
+
+  /* BORDER */
+  --BORDER_RADIUS: 5px;
+
+  /* PADDING */
+  --PADDING: 20px 20px;
+}
+
+:root.dark {
+  /* Header BG IMG */
+  --MOBILE_HEADER_BG_IMG: url(images/bg-mobile-dark.jpg);
+  --DESKTOP_HEADER_BG_IMG: url(images/bg-desktop-dark.jpg);
+
+  /* THEME ICON */
+  --THEME_ICON: url(images/icon-sun.svg);
+
+  /* COLORS */
+  --TITLE_COLOR: hsl(236, 33%, 92%);
+  --BODY_BG_COLOR: hsl(235, 21%, 11%);
+  --FONT_COLOR: hsl(234, 11%, 52%);
+  --FILTER_HOVER_COLOR: hsl(236, 33%, 92%);
+
+  --BORDER_COLOR: hsl(233, 14%, 35%);
+  --BG_COLOR: hsl(235, 24%, 19%);
+  --ACTIVE_COLOR: hsl(220, 98%, 61%);
+  --TODO_TEXTCOLOR: hsl(234, 39%, 85%);
+  --HOVER_COLOR: hsl(234, 39%, 85%);
+  --BTN_BORDER_COLOR: hsl(233, 14%, 35%);
+  --FILTER_COLOR: hsl(234, 11%, 52%);
+
+  /* theme */
+  --VeryDarkBlue: hsl(235, 21%, 11%);
+  --VeryDarkDesaturatedBlue: hsl(235, 24%, 19%);
+  --LightGrayishBlue: hsl(234, 39%, 85%);
+  --LightGrayishBlue_hover: hsl(236, 33%, 92%);
+  --DarkGrayishBlue: hsl(234, 11%, 52%);
+  --VeryDarkGrayishBlue: hsl(233, 14%, 35%);
+  --VeryDarkGrayishBlue: hsl(237, 14%, 26%);
+
+  /* BORDER */
+  --BORDER_RADIUS: 5px;
+
+  /* PADDING */
+  --PADDING: 20px 20px;
 }
 
 body {
