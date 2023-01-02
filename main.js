@@ -303,20 +303,14 @@ const sortable = () => {
   new Sortable(todoListElem, {
     Animation: 150,
     ghostClass: "sortable-ghost",
-    store: {
-      get: function (todoListElem) {
-        let order = localStorage.getItem(todoListElem);
-      },
+    onUpdate: function (evt) {
+      const listItems = todoListElem.querySelectorAll(".todoListItem");
+      listItems.forEach((listItem) => {
+        const listitemContent =
+          listItem.firstElementChild.lastElementChild.innerText;
+
+        saveToLocaleStorage(listitemContent);
+      });
     },
   });
-  /* const listItems = todoListElem.querySelectorAll(".todoListItem");
-  listItems.forEach((listItem) => {
-    listItem.addEventListener("dragstart", () => {
-     
-    });
-    const listitemContent =
-      listItem.firstElementChild.lastElementChild.innerText;
-
-    saveToLocaleStorage(listitemContent);
-  }); */
 };
