@@ -54,6 +54,11 @@ const setPreferredColorTheme = () => {
 
 const createTodos = (e) => {
   e.preventDefault();
+  console.log(e.target);
+  e.target.disabled = true;
+  setTimeout(() => {
+    e.target.disabled = false;
+  }, 1000);
   const inputText = inputTextElem.value.trim();
   const todoListitem = document.createElement("li");
   todoListitem.setAttribute("draggable", "true");
@@ -75,6 +80,7 @@ const createTodos = (e) => {
   alls.forEach((all) => {
     all.click();
   });
+  highlightNewInput();
 };
 
 const checkAndGetTodosfromLocalStorage = () => {
@@ -313,4 +319,11 @@ const sortable = () => {
       });
     },
   });
+};
+
+const highlightNewInput = () => {
+  todoListElem.lastElementChild.classList.add("highlight");
+  setTimeout(() => {
+    todoListElem.lastElementChild.classList.remove("highlight");
+  }, 500);
 };
