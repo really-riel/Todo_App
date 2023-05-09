@@ -169,6 +169,7 @@ body {
   background-repeat: no-repeat;
 }
 .container {
+  height: 100%;
   width: 90%;
   max-width: 700px;
   margin: 0 auto;
