@@ -160,7 +160,7 @@ html {
 }
 
 body {
-  min-height: 100vh;
+  min-height: 100%;
   max-width: 100vw;
   background-color: var(--BODY_BG_COLOR);
   background-image: var(--MOBILE_HEADER_BG_IMG);
